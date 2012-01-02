@@ -42,7 +42,7 @@ all_files=(*(Om))
 if [[ count_new == 0 ]]; then
   # Seems nothing was extracted, let's create links for stuff we care about
   for FS in $file_suffixes; do
-    FS_files=( *.$FS(N) )
+    FS_files=( (#i)**/*.$FS~*sample*(N) )
     if (( $#FS_files )); then
       for n in *.$FS; ln $n $TARGET_DIR/$n
     fi
