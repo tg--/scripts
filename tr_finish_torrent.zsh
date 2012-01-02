@@ -1,13 +1,14 @@
 #!/bin/zsh
 
 # Supported Suffixes
-comp_suffixes=(rar zip 7z)
 file_suffixes=(avi mkv mp4 mov)
 
-# Commands to use, at your choice. Defaults are sane on GNU and Co.
-alias c_unrar='unrar x'
-alias c_unzip='unzip'
-alias c_7unzip='7z x'
+# Supported Archives
+typeset -A comp_suffixes
+comp_suffixes=( rar 'unrar x'
+                zip 'unzip'
+                7z  '7z x'
+              )
 
 # Set some paths
 if [ -z $TR_TORRENT_DIR ]; then
@@ -24,16 +25,10 @@ fi
 orig_files=(*(Om))
 
 # do some unpacking
-for CS in $comp_suffixes; do
+for CS in ${(k)comp_suffixes}; do
   CS_files=( *.$CS(N) )
   if (( $#CS_files )); then
-    if [[ $CS == rar ]]; then
-      for n in *.$CS; c_unrar $n
-    elif [[ $CS == zip ]]; then
-      for n in *.$CS; c_unzip $n
-    elif [[ $CS == 7z ]]; then
-      for n in *.$CS; c_7unzip $n
-    fi
+    for n in *.$CS; eval $comp_suffixes[$CS] $n
   fi
 done
 
