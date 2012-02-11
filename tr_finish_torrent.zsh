@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+setopt extendedglob
+
 targets=( avi mkv mp4 mov )
 
 typeset -A archives
@@ -37,14 +39,14 @@ all_files=( *(Om) )
 if [[ count_new == 0 ]]; then
   # Seems nothing was extracted, create links for stuff we care about
   for target in $targets; do
-    target_files=( (#i)**/*.$target~*sample*(N) )
+    target_files=( (#i)**/*.$target~sample(N) )
     if (( $#target_files )); then
       for n in *.$target; ln $n $TARGET_DIR/$n
     fi
   done
 elif [[ count_new > 0 ]]; then
   new_files=$all_files[0,$count_new]
-  for n in $new_files; mv $n $TARGET_DIR/
+  for n in $new_files; mv $n $TARGET_DIR
 else exit 1
 fi
 
