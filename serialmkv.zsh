@@ -10,7 +10,7 @@ fi
 
 if [ "$SUFFIX" = "flv" -o "$SUFFIX" = "wmv" ]
 then
-	for n in *.$SUFFIX; ffmpeg -acodec copy -vcodec copy -i $n $n:r.mkv
+	for n in *.$SUFFIX; ffmpeg -i $n -acodec copy -vcodec copy $n:r.mkv
 else
 	for n in *.$SUFFIX; mkvmerge -o $n:r.mkv $n
 fi
