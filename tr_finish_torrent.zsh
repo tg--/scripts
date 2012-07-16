@@ -36,7 +36,7 @@ all_files=( *(Om) )
 
 # handle targets
 (( count_new = $#all_files - $#original_files ))
-if [[ count_new == 0 ]]; then
+if [[ $count_new == 0 ]]; then
   # Seems nothing was extracted, create links for stuff we care about
   for target in $targets; do
     target_files=( (#i)**/*.$target~sample(N) )
@@ -44,7 +44,7 @@ if [[ count_new == 0 ]]; then
       for n in *.$target; ln $n $TARGET_DIR/$n
     fi
   done
-elif [[ count_new > 0 ]]; then
+elif [[ $count_new > 0 ]]; then
   new_files=$all_files[0,$count_new]
   for n in $new_files; mv $n $TARGET_DIR
 else exit 1
